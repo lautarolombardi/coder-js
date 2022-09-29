@@ -1,5 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+
 body{
     height: 100vh;
+
+    font-family: Poppins;
+}
+
+input, select{
+    outline: darkcyan 1px solid;
 }
 
 .main{
@@ -7,4 +16,15 @@ body{
 
     border: 2px solid darkcyan;
     border-radius: 10px;
+}
+
+.btn{
+    background-color: darkcyan;
+    border: none;
+
+    color: white;
+}
+
+.btn:hover{
+    background-color: cadetblue;
 }

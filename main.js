@@ -1,22 +1,20 @@
-let form = document.querySelector('#form');
-let simulador = document.querySelector('#simulador');
-let btnReset = document.querySelector('#reset');
-let btnCalc = document.querySelector('#calc');
+const form = document.querySelector('#form');
 
-let calcAgain = false;
+let usuario = {};
 
-function validarForm(e){
-    e.preventDefault();
-}
-form.addEventListener('submit', validarForm);
+let nombre = "";
+let dni;
+let montoSolicitado;
+let cuotas;
 
-function calcularMontos(){
-    let montoSolicitado = parseInt(document.querySelector('#monto').value);
-    let cuotas = parseInt(document.querySelector('#cuotas').value);
+let calcAgain = true;
 
+const calcularMontos = ()=>{
     let interes;
     let total;
     let montoCuota;
+
+    const calc = document.querySelector('#calc');
 
     switch(cuotas){
         case 12: {
@@ -24,9 +22,6 @@ function calcularMontos(){
             total = montoSolicitado + interes;
             montoCuota = Math.round(total / cuotas);
 
-            simulador.innerText = `El monto total a pagar es $${total}\nEn ${cuotas} cuotas de $${montoCuota}`;
-
-            calcAgain = true;
             break;
         }
         case 24: {
@@ -34,9 +29,6 @@ function calcularMontos(){
             total = montoSolicitado + interes;
             montoCuota = Math.round(total / cuotas);
 
-            simulador.innerText = `El monto total a pagar es $${total}\nEn ${cuotas} cuotas de $${montoCuota}`; 
-
-            calcAgain = true;;
             break;
         }
         case 36: {
@@ -44,9 +36,6 @@ function calcularMontos(){
             total = montoSolicitado + interes;
             montoCuota = Math.round(total / cuotas);
 
-            simulador.innerText = `El monto total a pagar es $${total}\nEn ${cuotas} cuotas de $${montoCuota}`; 
-
-            calcAgain = true;
             break;
         }
         case 48: {
@@ -54,9 +43,6 @@ function calcularMontos(){
             total = montoSolicitado + interes;
             montoCuota = Math.round(total / cuotas);
 
-            simulador.innerText = `El monto total a pagar es $${total}\nEn ${cuotas} cuotas de $${montoCuota}`;
-            
-            calcAgain = true;
             break;
         }
         case 60: {
@@ -64,196 +50,44 @@ function calcularMontos(){
             total = montoSolicitado + interes;
             montoCuota = Math.round(total / cuotas);
 
-            simulador.innerText = `El monto total a pagar es $${total}\nEn ${cuotas} cuotas de $${montoCuota}`; 
-
-            calcAgain = true;
             break;
         }
     }
-}
+    usuario = {nombre, dni, montoSolicitado, cuotas, interes, total, montoCuota};
 
-btnReset.addEventListener('click', (e)=>{
-    simulador.innerText = '';
+    const enJSON = JSON.stringify(usuario);
+    localStorage.setItem('usuario', enJSON);
+
+    const usuarioRecuperado = JSON.parse(localStorage.getItem('usuario'));
+
+    calc.innerHTML += `<p>El monto total a pagar es <b>$${usuarioRecuperado.total}</b><br>En ${usuarioRecuperado.cuotas} cuotas de <b>$${usuarioRecuperado.montoCuota}</b>`;
     calcAgain = false;
-});
-
-btnCalc.addEventListener('click', (e)=>{
-    if(calcAgain === false){
-        calcularMontos();
-    }  
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* const nombre = document.getElementById('name');
-const dni = document.getElementById('dni');
-
-function simularCredito(){ 
-    const usuario = [];
-    let credito = {};
-    let nombre = '';
-    let dni;
-    
-    function calcularMontos(){
-        const montoSolicitado = document.getElementById('monto');
-        let opcionCuotas;
-        let cuotas;
-        let interes;
-        let total;
-        let montoCuota;
-    
-        switch(opcionCuotas){
-            case 1:
-                cuotas = 12;
-                interes = (montoSolicitado * 15) / 100;
-                total = montoSolicitado + interes;
-                montoCuota = Math.round(total / cuotas);
-
-                credito = {montoSolicitado, cuotas, interes, total, montoCuota};
-                usuario.push(nombre, dni, credito);
-                usuarioGuardado = usuario;
-
-                calc.classList = 'my-3'
-                calc.innerText += `El monto total a pagar es $${total}\nEn ${cuotas} cuotas de $${montoCuota}`;
-                
-                break;
-            case 2:
-                cuotas = 24;
-                interes = (montoSolicitado * 30) / 100;
-                total = montoSolicitado + interes;
-                montoCuota = Math.round(total / cuotas);
-
-                credito = {montoSolicitado, cuotas, interes, total, montoCuota};
-                usuario.push(nombre, dni, credito);
-                usuarioGuardado = usuario;
-
-                calc.classList = 'my-3'
-                calc.innerText += `El monto total a pagar es $${total}\nEn ${cuotas} cuotas de $${montoCuota}`;
-
-                break;
-            case 3:
-                cuotas = 36;
-                interes = (montoSolicitado * 45) / 100;
-                total = montoSolicitado + interes;
-                montoCuota = Math.round(total / cuotas);
-
-                credito = {montoSolicitado, cuotas, interes, total, montoCuota};
-                usuario.push(nombre, dni, credito);
-                usuarioGuardado = usuario;
-
-                calc.classList = 'my-3'
-                calc.innerText += `El monto total a pagar es $${total}\nEn ${cuotas} cuotas de $${montoCuota}`;
-                
-                break;
-            case 4:
-                cuotas = 48;
-                interes = (montoSolicitado * 60) / 100;
-                total = montoSolicitado + interes;
-                montoCuota = Math.round(total / cuotas);
-
-                credito = {montoSolicitado, cuotas, interes, total, montoCuota};
-                usuario.push(nombre, dni, credito);
-                usuarioGuardado = usuario;
-
-                calc.classList = 'my-3'
-                calc.innerText += `El monto total a pagar es $${total}\nEn ${cuotas} cuotas de $${montoCuota}`;
-
-                break;
-            case 5:
-                cuotas = 60;
-                interes = (montoSolicitado * 75) / 100;
-                total = montoSolicitado + interes;
-                montoCuota = Math.round(total / cuotas);
-
-                credito = {montoSolicitado, cuotas, interes, total, montoCuota};
-                usuario.push(nombre, dni, credito);
-                usuarioGuardado = usuario;
-
-                calc.classList = 'my-3'
-                calc.innerText += `El monto total a pagar es $${total}\nEn ${cuotas} cuotas de $${montoCuota}`;
-
-                break;
+};
+
+form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+
+    if(calcAgain){
+        const formulario = new FormData(form);
+
+        nombre = formulario.get('nombre');
+        dni = parseInt(formulario.get('dni'));
+        montoSolicitado = parseInt(formulario.get('monto'));
+        cuotas = parseInt(formulario.get('cuotas'));
+
+        if(montoSolicitado > 5000){
+            calcularMontos();
+        } else{
+            calc.innerHTML = `<p>El monto debe ser mayor a <b>$5000</b></p>`;
         }
     }
-    calcularMontos();
-}
+});
 
-simularCredito(); */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+form.addEventListener('reset', ()=>{
+    localStorage.clear();
+    calc.innerHTML = '';
+    calcAgain = true;
+});
 
 
 
