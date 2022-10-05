@@ -10,24 +10,24 @@
 </head>
 <body class="body d-flex flex-column align-items-center justify-content-center">
     <main class="main">
-        <h3 class="fw-bold text-uppercase">Simulador de créditos</h3>
+        <h3 class="fw-bold text-uppercase">SOLICITA TU CRÉDITO</h3>
         <form id="form">
-            <div class="mb-3">
+            <div class="mb-3" id="boxName">
                 <label for="nombre" class="form-label">Nombre</label>
                 <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre">
             </div>
-            <div class="mb-3">
+            <div class="mb-3" id="boxDni">
                 <label for="dni" class="form-label">DNI</label>
                 <input type="number" name="dni" class="form-control" id="dni" placeholder="DNI">
             </div>
-            <div class="mb-3">
+            <div class="mb-3" id="boxName">
                 <label for="monto" class="form-label">Monto a solicitar</label>
                 <input type="number" name="monto" class="form-control" id="monto" placeholder="Monto mayor a $5000">
             </div>
             <div class="mb-3">
                 <label for="cuotas" class="form-label">Cuotas</label>
                 <select name="cuotas" id="cuotas" class="form-select" aria-label="Default select example">
-                    <option selected>Selecciona una opción</option>
+                    <option selected value="0">Selecciona una opción</option>
                     <option value="12">12 cuotas</option>
                     <option value="24">24 cuotas</option>
                     <option value="36">36 cuotas</option>
@@ -37,9 +37,11 @@
             </div>
             <div id="calc"></div>
             <button type="reset" class="mt-2 me-3 btn btn-primary">Limpiar</button>
-            <button type="submit" class="mt-2 btn btn-primary">Calcular</button>
+            <button type="submit" class="mt-2 btn btn-primary" id="btnCalc">Calcular</button>
+            <button type="submit" class="d-none mt-2 btn btn-primary" id="btnStart">Iniciar solicitud</button>
         </form>
     </main>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="main.js"></script>
 </body>
 </html>

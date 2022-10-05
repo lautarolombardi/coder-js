@@ -1,94 +1,123 @@
-const form = document.querySelector('#form');
+const calc = document.querySelector('#calc');
+const btnCalc = document.querySelector('#btnCalc');
+const btnStart = document.querySelector('#btnStart');
 
-let usuario = {};
+const usuarios = [];
+let usuario;
 
-let nombre = "";
+let nombre;
 let dni;
-let montoSolicitado;
+let monto;
 let cuotas;
-
-let calcAgain = true;
+let interes;
+let total;
+let montoCuota;
 
 const calcularMontos = ()=>{
-    let interes;
-    let total;
-    let montoCuota;
-
-    const calc = document.querySelector('#calc');
-
     switch(cuotas){
         case 12: {
-            interes = (montoSolicitado * 15) / 100;
-            total = montoSolicitado + interes;
+            interes = (monto * 15) / 100;
+            total = monto + interes;
             montoCuota = Math.round(total / cuotas);
 
             break;
         }
         case 24: {
-            interes = (montoSolicitado * 30) / 100;
-            total = montoSolicitado + interes;
+            interes = (monto * 30) / 100;
+            total = monto + interes;
             montoCuota = Math.round(total / cuotas);
 
             break;
         }
         case 36: {
-            interes = (montoSolicitado * 45) / 100;
-            total = montoSolicitado + interes;
+            interes = (monto * 45) / 100;
+            total = monto + interes;
             montoCuota = Math.round(total / cuotas);
 
             break;
         }
         case 48: {
-            interes = (montoSolicitado * 60) / 100;
-            total = montoSolicitado + interes;
+            interes = (monto * 60) / 100;
+            total = monto + interes;
             montoCuota = Math.round(total / cuotas);
 
             break;
         }
         case 60: {
-            interes = (montoSolicitado * 75) / 100;
-            total = montoSolicitado + interes;
+            interes = (monto * 75) / 100;
+            total = monto + interes;
             montoCuota = Math.round(total / cuotas);
 
             break;
         }
     }
-    usuario = {nombre, dni, montoSolicitado, cuotas, interes, total, montoCuota};
-
-    const enJSON = JSON.stringify(usuario);
-    localStorage.setItem('usuario', enJSON);
-
-    const usuarioRecuperado = JSON.parse(localStorage.getItem('usuario'));
-
-    calc.innerHTML += `<p>El monto total a pagar es <b>$${usuarioRecuperado.total}</b><br>En ${usuarioRecuperado.cuotas} cuotas de <b>$${usuarioRecuperado.montoCuota}</b>`;
-    calcAgain = false;
 };
 
-form.addEventListener('submit', (e)=>{
+const solicitarCredito = ()=>{
+    nombre = document.querySelector('#nombre').value;
+    dni = parseInt(document.querySelector('#dni').value);
+    monto = parseInt(document.querySelector('#monto').value);
+    cuotas = parseInt(document.querySelector('#cuotas').value);
+
+    const usuariosObtenidos = JSON.parse(localStorage.getItem('usuarios'));
+
+    if(nombre !== '' && !isNaN(dni) && !isNaN(monto) && monto >= 5000 && cuotas !== 0){
+        if(usuariosObtenidos !== null){
+            const yaEstaba = usuariosObtenidos.find(user => user.dni === dni && user.monto === monto);
+            if(yaEstaba){
+                calc.innerHTML = `<p class="text-danger">Ya iniciaste una solicitud por ese monto</p>`;
+            } else{
+                usuario = {nombre, dni, monto, cuotas, interes, total, montoCuota};
+                usuarios.push(usuario);
+
+                localStorage.setItem('usuarios', JSON.stringify(usuarios));
+
+                calc.innerHTML = `<p class="text-success">La solicitud fue ingresada con exito</p>`;
+            }
+        } else{
+            usuario = {nombre, dni, monto, cuotas, interes, total, montoCuota};
+            usuarios.push(usuario);
+
+            localStorage.setItem('usuarios', JSON.stringify(usuarios));
+
+            calc.innerHTML = `<p class="text-success">La solicitud fue ingresada con exito</p>`;
+        }
+    }
+};
+
+form.addEventListener('reset', ()=>{
+    calc.innerHTML = '';
+    btnCalc.classList.remove('d-none');
+    btnStart.classList.add('d-none');
+});
+
+btnCalc.addEventListener('click', (e)=>{
     e.preventDefault();
 
-    if(calcAgain){
-        const formulario = new FormData(form);
+    monto = parseInt(document.querySelector('#monto').value);
+    cuotas = parseInt(document.querySelector('#cuotas').value);
 
-        nombre = formulario.get('nombre');
-        dni = parseInt(formulario.get('dni'));
-        montoSolicitado = parseInt(formulario.get('monto'));
-        cuotas = parseInt(formulario.get('cuotas'));
-
-        if(montoSolicitado > 5000){
+    if(monto >= 5000){
+        if(cuotas !== 0){
             calcularMontos();
+
+            calc.innerHTML = `<p>El monto total a pagar es <b>$${total}</b><br>En <b>${cuotas}</b> cuotas de <b>$${montoCuota}</b></p>`;
+
+            btnCalc.classList.add('d-none');
+            btnStart.classList.remove('d-none');
         } else{
-            calc.innerHTML = `<p>El monto debe ser mayor a <b>$5000</b></p>`;
+            calc.innerHTML = `<p class="text-danger">Debes seleccionar una opción para las cuotas</p>`;
         }
+    } else{
+        calc.innerHTML = `<p class="text-danger">El monto debe ser mayor o igual a $5000</p>`;
     }
 });
 
-form.addEventListener('reset', ()=>{
-    localStorage.clear();
-    calc.innerHTML = '';
-    calcAgain = true;
-});
+btnStart.addEventListener('click', (e)=>{
+    e.preventDefault();
 
+    solicitarCredito();
+});
 
 
 
