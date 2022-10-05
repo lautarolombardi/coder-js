@@ -59,6 +59,8 @@ const solicitarCredito = ()=>{
     monto = parseInt(document.querySelector('#monto').value);
     cuotas = parseInt(document.querySelector('#cuotas').value);
 
+    calcularMontos();
+
     const usuariosObtenidos = JSON.parse(localStorage.getItem('usuarios'));
 
     if(nombre !== '' && !isNaN(dni) && !isNaN(monto) && monto >= 5000 && cuotas !== 0){
