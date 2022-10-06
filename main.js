@@ -67,14 +67,24 @@ const solicitarCredito = ()=>{
         if(usuariosObtenidos !== null){
             const yaEstaba = usuariosObtenidos.find(user => user.dni === dni && user.monto === monto);
             if(yaEstaba){
-                calc.innerHTML = `<p class="text-danger">Ya iniciaste una solicitud por ese monto</p>`;
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Ya iniciaste una solicitud por ese monto',
+                    timer: 5000
+                });
             } else{
                 usuario = {nombre, dni, monto, cuotas, interes, total, montoCuota};
                 usuarios.push(usuario);
 
                 localStorage.setItem('usuarios', JSON.stringify(usuarios));
 
-                calc.innerHTML = `<p class="text-success">La solicitud fue ingresada con exito</p>`;
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Felicitaciones',
+                    text: 'Iniciaste con éxito la solicitud',
+                    timer: 5000
+                });
             }
         } else{
             usuario = {nombre, dni, monto, cuotas, interes, total, montoCuota};
@@ -82,7 +92,12 @@ const solicitarCredito = ()=>{
 
             localStorage.setItem('usuarios', JSON.stringify(usuarios));
 
-            calc.innerHTML = `<p class="text-success">La solicitud fue ingresada con exito</p>`;
+            Swal.fire({
+                icon: 'success',
+                title: 'Felicitaciones',
+                text: 'Iniciaste con éxito la solicitud',
+                timer: 5000
+            });
         }
     }
 };
