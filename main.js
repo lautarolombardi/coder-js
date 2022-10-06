@@ -61,43 +61,49 @@ const solicitarCredito = ()=>{
 
     calcularMontos();
 
-    const usuariosObtenidos = JSON.parse(localStorage.getItem('usuarios'));
+    const usuariosObtenidos = JSON.parse(sessionStorage.getItem('usuarios'));
 
     if(nombre !== '' && !isNaN(dni) && !isNaN(monto) && monto >= 5000 && cuotas !== 0){
         if(usuariosObtenidos !== null){
-            const yaEstaba = usuariosObtenidos.find(user => user.dni === dni && user.monto === monto);
+            const yaEstaba = usuariosObtenidos.find(user => user.nombre == nombre && user.dni === dni && user.monto === monto);
             if(yaEstaba){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Ya iniciaste una solicitud por ese monto',
-                    timer: 5000
-                });
+                setTimeout(()=>{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ya iniciaste una solicitud antes por ese monto',
+                        timer: 5000
+                    });
+                }, 500);
             } else{
                 usuario = {nombre, dni, monto, cuotas, interes, total, montoCuota};
                 usuarios.push(usuario);
 
-                localStorage.setItem('usuarios', JSON.stringify(usuarios));
+                sessionStorage.setItem('usuarios', JSON.stringify(usuarios));
 
+                setTimeout(()=>{
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Felicitaciones',
+                        text: 'Iniciaste con éxito la solicitud',
+                        timer: 5000
+                    });
+                }, 500);
+            }
+        } else{
+            usuario = {nombre, dni, monto, cuotas, interes, total, montoCuota};
+            usuarios.push(usuario);
+
+            sessionStorage.setItem('usuarios', JSON.stringify(usuarios));
+
+            setTimeout(()=>{
                 Swal.fire({
                     icon: 'success',
                     title: 'Felicitaciones',
                     text: 'Iniciaste con éxito la solicitud',
                     timer: 5000
                 });
-            }
-        } else{
-            usuario = {nombre, dni, monto, cuotas, interes, total, montoCuota};
-            usuarios.push(usuario);
-
-            localStorage.setItem('usuarios', JSON.stringify(usuarios));
-
-            Swal.fire({
-                icon: 'success',
-                title: 'Felicitaciones',
-                text: 'Iniciaste con éxito la solicitud',
-                timer: 5000
-            });
+            }, 500);
         }
     }
 };
