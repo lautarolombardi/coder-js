@@ -20,6 +20,10 @@
                 <label for="dni" class="form-label">DNI</label>
                 <input type="number" name="dni" class="form-control" id="dni" placeholder="DNI">
             </div>
+            <div class="mb-3" id="boxEmail">
+                <label for="dni" class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" id="email" placeholder="for@example.com">
+            </div>
             <div class="mb-3" id="boxName">
                 <label for="monto" class="form-label">Monto a solicitar</label>
                 <input type="number" name="monto" class="form-control" id="monto" placeholder="Monto mayor a $5000">
@@ -42,6 +46,8 @@
         </form>
     </main>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="main.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+
 </body>
 </html>

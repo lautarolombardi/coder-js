@@ -7,6 +7,7 @@ let usuario;
 
 let nombre;
 let dni;
+let email;
 let monto;
 let cuotas;
 let interes;
@@ -53,9 +54,26 @@ const calcularMontos = ()=>{
     }
 };
 
+const sendEmail = ()=>{
+    const data = {
+        service_id: 'default_service',
+        template_id: 'template_vf8d421',
+        user_id: 'ne6L2MDU8Zm1oZcVn',
+    };
+    
+    fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-type':'application/json',
+        }
+    });
+};
+
 const solicitarCredito = ()=>{
     nombre = document.querySelector('#nombre').value;
     dni = parseInt(document.querySelector('#dni').value);
+    email = document.querySelector('#email').value;
     monto = parseInt(document.querySelector('#monto').value);
     cuotas = parseInt(document.querySelector('#cuotas').value);
 
@@ -75,6 +93,7 @@ const solicitarCredito = ()=>{
                         timer: 5000
                     });
                 }, 500);
+                
             } else{
                 usuario = {nombre, dni, monto, cuotas, interes, total, montoCuota};
                 usuarios.push(usuario);
@@ -89,6 +108,8 @@ const solicitarCredito = ()=>{
                         timer: 5000
                     });
                 }, 500);
+
+                sendEmail();
             }
         } else{
             usuario = {nombre, dni, monto, cuotas, interes, total, montoCuota};
@@ -104,6 +125,8 @@ const solicitarCredito = ()=>{
                     timer: 5000
                 });
             }, 500);
+
+            sendEmail();
         }
     }
 };
