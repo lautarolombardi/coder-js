@@ -244,7 +244,7 @@ const sendEmail = ()=>{
         template_id: 'template_vf8d421',
         user_id: 'ne6L2MDU8Zm1oZcVn',
         template_params: {
-            'to_name': username,
+            'to_name': userName,
             'to_email': email
         }
     };
