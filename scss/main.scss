@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap');
+
+$mainFont: 'Rubik';
+$mainColor: #134F5C;
+
+body{
+    background-color: #134F5C;
+
+    font-family: $mainFont;
+}
+
+.container-fluid{
+    height: 100vh;
+}
+
+.text-mainColor{
+    color: $mainColor;
+}
+
+.credit-box{
+    width: 30%;
+
+    padding: 20px; 
+
+    background-color: #e7edee;
+    border-radius: 10px;
+}
+
+.form-control:focus, .form-select:focus{
+    border: 1px solid $mainColor;
+    box-shadow: none !important;
+}
+
+.button{
+    padding: 8px 15px;
+
+    background-color: $mainColor;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+
+    color: #e7edee;
+
+    transition: all 150ms;
+
+    &:hover{
+        background-color: lightgray;
+        
+        color: $mainColor;
+    }
+
+    &:active{
+        border: none;
+    }
+}
+
+.calc-box{
+    height: 180px;
+    width: 350px;
+
+    padding: 20px; 
+
+    background-color: #e7edee;
+    border-radius: 10px;
+
+    .calc-text{
+        border: 1px solid $mainColor;
+        border-radius: 5px;
+    }
+}
+
+
+
+
